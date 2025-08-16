@@ -1,6 +1,7 @@
 import { Star, Clock, Truck } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 
 interface RestaurantCardProps {
   name: string;
@@ -21,8 +22,13 @@ const RestaurantCard = ({
   deliveryFee,
   offer 
 }: RestaurantCardProps) => {
+  const navigate = useNavigate();
+
   return (
-    <Card className="group cursor-pointer overflow-hidden border-0 shadow-food hover:shadow-lg transition-all duration-300 hover:-translate-y-1 gradient-card">
+    <Card 
+      className="group cursor-pointer overflow-hidden border-0 shadow-food hover:shadow-lg transition-all duration-300 hover:-translate-y-1 gradient-card"
+      onClick={() => navigate("/restaurant-menu")}
+    >
       <div className="relative overflow-hidden">
         <img 
           src={image} 

@@ -1,12 +1,19 @@
 import { ShoppingCart, User, Search, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import AuthModal from "@/components/AuthModal";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const navigate = useNavigate();
+
   return (
-    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+    <>
+      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
@@ -41,7 +48,12 @@ const Navbar = () => {
             </Button>
             
             {/* Cart */}
-            <Button variant="ghost" size="icon" className="relative">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative"
+              onClick={() => navigate("/cart")}
+            >
               <ShoppingCart className="w-5 h-5" />
               <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
                 2
@@ -49,19 +61,27 @@ const Navbar = () => {
             </Button>
 
             {/* User Profile */}
-            <Button variant="ghost" size="icon">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => setIsAuthModalOpen(true)}
+            >
               <User className="w-5 h-5" />
             </Button>
 
             {/* Login Button */}
-            <Button className="hidden sm:flex gradient-primary text-white hover:opacity-90 transition-smooth">
+            <Button 
+              className="hidden sm:flex gradient-primary text-white hover:opacity-90 transition-smooth"
+              onClick={() => setIsAuthModalOpen(true)}
+            >
               Login
             </Button>
           </div>
         </div>
+        </div>
 
         {/* Mobile Search Bar */}
-        <div className="lg:hidden pb-4">
+        <div className="lg:hidden pb-4 px-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input 
@@ -70,8 +90,13 @@ const Navbar = () => {
             />
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+      />
+    </>
   );
 };
 
